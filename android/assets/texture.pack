@@ -1,0 +1,19 @@
+
+texture.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+dalej
+  rotate: false
+  xy: 1, 63
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+ramka
+  rotate: false
+  xy: 1, 1
+  size: 110, 60
+  orig: 110, 60
+  offset: 0, 0
+  index: -1
