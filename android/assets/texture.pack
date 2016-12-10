@@ -17,3 +17,10 @@ ramka
   orig: 110, 60
   offset: 0, 0
   index: -1
+white
+  rotate: false
+  xy: 153, 160
+  size: 46, 53
+  orig: 46, 53
+  offset: 0, 0
+  index: -1
