@@ -26,13 +26,8 @@ public class MainScreen extends State {
     private GlyphLayout layout = new GlyphLayout(); // do mierzenia długości tekstu w px
 
 
-    private static Array<TextField> wspolczynniki = new Array<TextField>();
+    private Array<TextField> wspolczynniki = new Array<TextField>();
 
-    public static Array<TextField> getWspolczynniki() {
-        return wspolczynniki;
-    }
-
-    private Array<Label> x = new Array<Label>();
 
     private Array<Label>  potega = new Array<Label>();
 
@@ -66,7 +61,11 @@ public class MainScreen extends State {
             wspolczynnik.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
             wspolczynniki.add(wspolczynnik);
 
-          //  Label x1 = new Label("x", new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
+            Label x = new Label("x", new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
+            layout.setText(sofiaProSoftMedium46px , x.getText());
+            x.setPosition( 200*w+wspolczynnik.getWidth()/2+50,upY(h*65+150) );
+            addActor(x);
+
 
         }
 
@@ -74,6 +73,7 @@ public class MainScreen extends State {
         while(iter.hasNext()){
             TextField wspolczynnik = iter.next();
             addActor(wspolczynnik);
+          //  addActor(x);
         }
 
 
@@ -90,9 +90,7 @@ public class MainScreen extends State {
 
     @Override
     public void handleInput(float x, float y) {
-        if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-upY((int)dalej.getY())+dalej.getHeight()/2)*(y-upY((int)dalej.getY())+dalej.getHeight()/2) < dalej.getWidth()/2*dalej.getWidth()/2){
-                startEndAnimationAndPushNewState(new MiejscaZerowe(gsm));
-        }
+
     }
 
     @Override
