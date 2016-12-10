@@ -11,8 +11,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 
 import pl.edu.agh.polynomial.Polynomial;
@@ -29,6 +33,7 @@ public class StartScreen extends State {
     private Label podajStopien = new Label("Podaj stopień wielomianu" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
     private GlyphLayout layout = new GlyphLayout(); // do mierzenia długości tekstu w px
     private TextField stopien;
+    //private SelectBox <Integer> stopien;
     private Image dalej;
 
     public StartScreen(GameStateManager gsm) {
@@ -47,6 +52,28 @@ public class StartScreen extends State {
         stopien.setMaxLength(2);
         stopien.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
         addActor(stopien);
+       /* SelectBox.SelectBoxStyle boxStyle = new SelectBox.SelectBoxStyle();
+        boxStyle.fontColor = Color.BLACK;
+        boxStyle.font = sofiaProSoftMedium46px;
+        boxStyle.background = Polynomial.skin.getDrawable("ramka");
+        boxStyle.scrollStyle = new ScrollPane.ScrollPaneStyle();
+        boxStyle.listStyle = new List.ListStyle();
+        boxStyle.listStyle.font = sofiaProSoftMedium46px;
+        boxStyle.listStyle.fontColorSelected = Color.GOLD;
+        boxStyle.listStyle.fontColorUnselected = Color.WHITE;
+        boxStyle.listStyle.selection = Polynomial.skin.getDrawable("ramka");
+        boxStyle.listStyle.background = Polynomial.skin.getDrawable("ramka");*/
+        /*stopien = new SelectBox<Integer>(skin);
+        stopien.setPosition(Polynomial.WIDTH/2-stopien.getWidth()/2,upY(200));
+
+
+        Integer stopnie[] = new Integer[20];
+        for(int i=1 ; i<21 ; i++){
+            stopnie[i-1]=i;
+        }
+        stopien.setSelected(14);
+        stopien.setItems(stopnie);
+        addActor(stopien);*/
         dalej=new Image(Polynomial.skin.getDrawable("dalej"));
         dalej.setPosition(Polynomial.WIDTH/2-dalej.getWidth()/2,upY(400));
         addActor(dalej);
@@ -56,7 +83,7 @@ public class StartScreen extends State {
 
     @Override
     public void handleInput(float x, float y){
-        if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-dalej.getY()-dalej.getHeight()/2)*(y-dalej.getY()-dalej.getHeight()/2) < dalej.getWidth()*dalej.getWidth()){
+        if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-upY((int)dalej.getY())+dalej.getHeight()/2)*(y-upY((int)dalej.getY())+dalej.getHeight()/2) < dalej.getWidth()/2*dalej.getWidth()/2){
             if(!stopien.getText().isEmpty()){
                 startEndAnimationAndPushNewState(new MainScreen(gsm , Integer.parseInt(stopien.getText())));
             }
