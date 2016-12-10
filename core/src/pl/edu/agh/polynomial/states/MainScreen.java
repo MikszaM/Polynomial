@@ -25,6 +25,7 @@ public class MainScreen extends State {
     private Label podajWspolczynniki = new Label("Podaj współczynniki wielomianu" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
     private GlyphLayout layout = new GlyphLayout(); // do mierzenia długości tekstu w px
 
+    private Label zero = new Label("=0" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
 
     private static Array<TextField> wspolczynniki = new Array<TextField>();
 
@@ -54,32 +55,39 @@ public class MainScreen extends State {
         tStyle.background =  Polynomial.skin.getDrawable("ramka");
 
 
-        x = new Label[stopienWielomianu];
-        potegi = new Label[stopienWielomianu];
-        for(int i=0; i<stopienWielomianu; i++){
+        x = new Label[stopienWielomianu+1];
+        potegi = new Label[stopienWielomianu+1];
+        for(int i=0; i<stopienWielomianu+1; i++){
             TextField wspolczynnik = new TextField("",tStyle);
             wspolczynnik.setMessageText("0");
             int h = i / 5;
             int w = i % 5;
-            wspolczynnik.setPosition(200*w+5,upY(h*65+150));
+            wspolczynnik.setPosition(190*w+10,upY(h*65+150));
             wspolczynnik.setAlignment(Align.center);
-            wspolczynnik.setMaxLength(2);
+            wspolczynnik.setMaxLength(3);
             wspolczynnik.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
             wspolczynniki.add(wspolczynnik);
 
             String pot;
-            if(stopienWielomianu-i != 1) pot  = Integer.toString(stopienWielomianu-i);
+            if(stopienWielomianu-i != 1&&stopienWielomianu-i != 0) pot  = Integer.toString(stopienWielomianu-i);
             else pot = " ";
 
             potegi[i] = new Label(pot, new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
             layout.setText(sofiaProSoftMedium46px , potegi[i].getText());
             potegi[i].setFontScale(0.5f);
-            potegi[i].setPosition(200*w+wspolczynnik.getWidth()/2+70,upY(h*65+130));
+            potegi[i].setPosition(190*w+wspolczynnik.getWidth()/2+70,upY(h*65+130));
 
-
-            x[i] = new Label("x", new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
+            String pisz;
+            if(stopienWielomianu-i != 0) pisz = "x";
+            else pisz = " ";
+            x[i] = new Label(pisz, new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
             layout.setText(sofiaProSoftMedium46px , x[i].getText());
-            x[i].setPosition( 200*w+wspolczynnik.getWidth()/2+50,upY(h*65+150) );
+            x[i].setPosition( 190*w+wspolczynnik.getWidth()/2+50,upY(h*65+150) );
+
+            if(i==stopienWielomianu){
+                layout.setText(sofiaProSoftMedium46px , zero.getText());
+                zero.setPosition( 190*w+wspolczynnik.getWidth()/2+50,upY(h*65+150));
+            }
         }
 
         Iterator<TextField> iter = wspolczynniki.iterator();
@@ -96,6 +104,7 @@ public class MainScreen extends State {
            addActor(i);
         }
 
+        addActor(zero);
 
         dalej=new Image(Polynomial.skin.getDrawable("dalej"));
         dalej.setPosition(Polynomial.WIDTH/2-dalej.getWidth()/2,0);
