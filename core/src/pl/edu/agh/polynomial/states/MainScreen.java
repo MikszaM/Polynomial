@@ -90,6 +90,9 @@ public class MainScreen extends State {
 
     @Override
     public void handleInput(float x, float y) {
+        if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-upY((int)dalej.getY())+dalej.getHeight()/2)*(y-upY((int)dalej.getY())+dalej.getHeight()/2) < dalej.getWidth()/2*dalej.getWidth()/2){
+            startEndAnimationAndPushNewState(new MiejscaZerowe(gsm));
+        }
 
     }
 
