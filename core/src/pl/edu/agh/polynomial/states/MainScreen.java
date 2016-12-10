@@ -66,6 +66,7 @@ public class MainScreen extends State {
             x.setPosition( 200*w+wspolczynnik.getWidth()/2+50,upY(h*65+150) );
             addActor(x);
 
+          //  Label potega1 = new Label()
 
         }
 
