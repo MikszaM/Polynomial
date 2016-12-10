@@ -26,10 +26,15 @@ public class MainScreen extends State {
     private GlyphLayout layout = new GlyphLayout(); // do mierzenia długości tekstu w px
 
 
-    private Array<TextField> wspolczynniki = new Array<TextField>();
+    private static Array<TextField> wspolczynniki = new Array<TextField>();
 
+    public static Array<TextField> getWspolczynniki() {
+        return wspolczynniki;
+    }
 
     private Array<Label>  potega = new Array<Label>();
+
+    private Label[] x;
 
 
     private Image dalej;
@@ -49,7 +54,7 @@ public class MainScreen extends State {
         tStyle.background =  Polynomial.skin.getDrawable("ramka");
 
 
-
+        x = new Label[stopienWielomianu];
         for(int i=0; i<stopienWielomianu; i++){
             TextField wspolczynnik = new TextField("",tStyle);
             wspolczynnik.setMessageText("0");
@@ -61,19 +66,18 @@ public class MainScreen extends State {
             wspolczynnik.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
             wspolczynniki.add(wspolczynnik);
 
-            Label x = new Label("x", new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
-            layout.setText(sofiaProSoftMedium46px , x.getText());
-            x.setPosition( 200*w+wspolczynnik.getWidth()/2+50,upY(h*65+150) );
-            addActor(x);
-
-
+            x[i] = new Label("x", new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
+            layout.setText(sofiaProSoftMedium46px , x[i].getText());
+            x[i].setPosition( 200*w+wspolczynnik.getWidth()/2+50,upY(h*65+150) );
         }
 
         Iterator<TextField> iter = wspolczynniki.iterator();
         while(iter.hasNext()){
             TextField wspolczynnik = iter.next();
             addActor(wspolczynnik);
-          //  addActor(x);
+        }
+        for(Label i:x){
+            addActor(i);
         }
 
 
