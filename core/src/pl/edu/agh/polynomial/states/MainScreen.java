@@ -32,7 +32,7 @@ public class MainScreen extends State {
         return wspolczynniki;
     }
 
-    private Array<Label>  potega = new Array<Label>();
+    private Label[] potegi;
 
     private Label[] x;
 
@@ -55,6 +55,7 @@ public class MainScreen extends State {
 
 
         x = new Label[stopienWielomianu];
+        potegi = new Label[stopienWielomianu];
         for(int i=0; i<stopienWielomianu; i++){
             TextField wspolczynnik = new TextField("",tStyle);
             wspolczynnik.setMessageText("0");
@@ -66,6 +67,16 @@ public class MainScreen extends State {
             wspolczynnik.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
             wspolczynniki.add(wspolczynnik);
 
+            String pot;
+            if(stopienWielomianu-i != 1) pot  = Integer.toString(stopienWielomianu-i);
+            else pot = " ";
+
+            potegi[i] = new Label(pot, new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+            layout.setText(sofiaProSoftMedium46px , potegi[i].getText());
+            potegi[i].setFontScale(0.5f);
+            potegi[i].setPosition(200*w+wspolczynnik.getWidth()/2+70,upY(h*65+130));
+
+
             x[i] = new Label("x", new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
             layout.setText(sofiaProSoftMedium46px , x[i].getText());
             x[i].setPosition( 200*w+wspolczynnik.getWidth()/2+50,upY(h*65+150) );
@@ -76,10 +87,14 @@ public class MainScreen extends State {
             TextField wspolczynnik = iter.next();
             addActor(wspolczynnik);
         }
+
+
         for(Label i:x){
             addActor(i);
         }
-
+        for(Label i:potegi){
+           addActor(i);
+        }
 
 
         dalej=new Image(Polynomial.skin.getDrawable("dalej"));
