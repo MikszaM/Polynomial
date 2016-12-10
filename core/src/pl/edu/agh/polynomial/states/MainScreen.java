@@ -26,7 +26,11 @@ public class MainScreen extends State {
     private GlyphLayout layout = new GlyphLayout(); // do mierzenia długości tekstu w px
 
 
-    private Array<TextField> wspolczynniki = new Array<TextField>();
+    private static Array<TextField> wspolczynniki = new Array<TextField>();
+
+    public static Array<TextField> getWspolczynniki() {
+        return wspolczynniki;
+    }
 
     private Array<Label> x = new Array<Label>();
 
@@ -86,7 +90,9 @@ public class MainScreen extends State {
 
     @Override
     public void handleInput(float x, float y) {
-
+        if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-upY((int)dalej.getY())+dalej.getHeight()/2)*(y-upY((int)dalej.getY())+dalej.getHeight()/2) < dalej.getWidth()/2*dalej.getWidth()/2){
+                startEndAnimationAndPushNewState(new MiejscaZerowe(gsm));
+        }
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.actions.IntAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -30,7 +31,7 @@ import static pl.edu.agh.polynomial.Polynomial.skin;
 public class StartScreen extends State {
 
     private BitmapFont sofiaProSoftMedium46px = new BitmapFont(Gdx.files.internal("SofiaProSoftMedium46px.fnt"));
-    private Label podajStopien = new Label("Podaj stopień wielomianu" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+    private Label podajStopien = new Label("Podaj stopień wielomianu 1-25" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
     private GlyphLayout layout = new GlyphLayout(); // do mierzenia długości tekstu w px
     private TextField stopien;
     //private SelectBox <Integer> stopien;
@@ -84,7 +85,7 @@ public class StartScreen extends State {
     @Override
     public void handleInput(float x, float y){
         if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-upY((int)dalej.getY())+dalej.getHeight()/2)*(y-upY((int)dalej.getY())+dalej.getHeight()/2) < dalej.getWidth()/2*dalej.getWidth()/2){
-            if(!stopien.getText().isEmpty()){
+            if(!stopien.getText().isEmpty() && Integer.parseInt(stopien.getText())<=25){
                 startEndAnimationAndPushNewState(new MainScreen(gsm , Integer.parseInt(stopien.getText())));
             }
         }
