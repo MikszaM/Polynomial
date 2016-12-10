@@ -24,7 +24,15 @@ public class MainScreen extends State {
     private BitmapFont sofiaProSoftMedium46px = new BitmapFont(Gdx.files.internal("SofiaProSoftMedium46px.fnt"));
     private Label podajWspolczynniki = new Label("Podaj współczynniki wielomianu" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
     private GlyphLayout layout = new GlyphLayout(); // do mierzenia długości tekstu w px
-    private TextField wspolczynniki;
+
+
+    private Array<TextField> wspolczynniki = new Array<TextField>();
+
+    private Array<Label> x = new Array<Label>();
+
+    private Array<Label>  potega = new Array<Label>();
+
+
     private Image dalej;
 
 
@@ -32,33 +40,42 @@ public class MainScreen extends State {
         super(gsm);
 
         layout.setText(sofiaProSoftMedium46px , podajWspolczynniki.getText());
-        podajWspolczynniki.setPosition(Polynomial.WIDTH/2-layout.width/2 , upY(100));
+        podajWspolczynniki.setPosition(Polynomial.WIDTH/2-layout.width/2 , upY(75));
         addActor(podajWspolczynniki);
+
+
         TextField.TextFieldStyle tStyle = new TextField.TextFieldStyle();
         tStyle.fontColor = Color.RED;
         tStyle.font = sofiaProSoftMedium46px;
         tStyle.background =  Polynomial.skin.getDrawable("ramka");
 
-        Array<TextField> wspolczynniki = new Array<TextField>();
+
 
         for(int i=0; i<stopienWielomianu; i++){
             TextField wspolczynnik = new TextField("",tStyle);
             wspolczynnik.setMessageText("0");
-            wspolczynnik.setPosition(200*i,upY(200));
+            int h = i / 5;
+            int w = i % 5;
+            wspolczynnik.setPosition(200*w+5,upY(h*65+150));
             wspolczynnik.setAlignment(Align.center);
             wspolczynnik.setMaxLength(2);
             wspolczynnik.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
             wspolczynniki.add(wspolczynnik);
+
+          //  Label x1 = new Label("x", new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
+
         }
+
         Iterator<TextField> iter = wspolczynniki.iterator();
         while(iter.hasNext()){
             TextField wspolczynnik = iter.next();
-
             addActor(wspolczynnik);
         }
 
+
+
         dalej=new Image(Polynomial.skin.getDrawable("dalej"));
-        dalej.setPosition(Polynomial.WIDTH/2-dalej.getWidth()/2,upY(400));
+        dalej.setPosition(Polynomial.WIDTH/2-dalej.getWidth()/2,0);
         addActor(dalej);
         Gdx.input.setInputProcessor(this);
         startEnterAnimation();
