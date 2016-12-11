@@ -170,6 +170,7 @@ public class MainScreen extends State {
     @Override
     public void handleInput(float x, float y) {
         if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-upY((int)dalej.getY())+dalej.getHeight()/2)*(y-upY((int)dalej.getY())+dalej.getHeight()/2) < dalej.getWidth()/2*dalej.getWidth()/2){
+<<<<<<< HEAD
             dane = new Double[dlugosc];
             int flag=0;
             for(int i = 0; i<=dlugosc; i++){
@@ -182,6 +183,11 @@ public class MainScreen extends State {
                     blad.setPosition(Polynomial.WIDTH/2-layout.width/2 , 100);
                     addActor(blad);
                 }
+=======
+            dane = new Double[dlugosc+1];
+            for(int i = dlugosc; i>=0; i--){
+
+>>>>>>> refs/remotes/piotrekm7/master
             //    if(znak[i].getText().equals("-"))
 
 
