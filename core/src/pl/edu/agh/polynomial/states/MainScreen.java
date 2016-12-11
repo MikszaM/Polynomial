@@ -49,7 +49,8 @@ public class MainScreen extends State {
 
     private Image dalej;
 
-    private Label blad = new  Label("Podałeś błedne dane" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+    private Label blad1 = new  Label("Błąd! \n Podałeś błedne dane" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+    private Label blad2 = new  Label("Błąd! \n Współczynnik przy najwyższej \n potędze musi być różny od zera" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
 
 
 
@@ -170,29 +171,48 @@ public class MainScreen extends State {
     @Override
     public void handleInput(float x, float y) {
         if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-upY((int)dalej.getY())+dalej.getHeight()/2)*(y-upY((int)dalej.getY())+dalej.getHeight()/2) < dalej.getWidth()/2*dalej.getWidth()/2){
-<<<<<<< HEAD
-            dane = new Double[dlugosc];
+
             int flag=0;
-            for(int i = 0; i<=dlugosc; i++){
+
+            dane = new Double[dlugosc+1];
+            for(int i = dlugosc; i>=0; i--){
                 try {
-                    dane[i]=Double.parseDouble(wspolczynniki.get(i).getText());
+                    if(wspolczynniki.get(i).getText().isEmpty()) {
+                        if(i==dlugosc) dane[i]=0.0;
+                        else dane[i]=1.0;
+                    }
+                    else dane[i]=Double.parseDouble(wspolczynniki.get(i).getText().replaceAll(",","."));
+
+                    if(znak[i].getText().toString().equals("-")) dane[i]=-dane[i];
 
                 } catch (NumberFormatException e) {
                     flag =1;
-                    layout.setText(sofiaProSoftMedium46px , podajWspolczynniki.getText());
-                    blad.setPosition(Polynomial.WIDTH/2-layout.width/2 , 100);
-                    addActor(blad);
-                }
-=======
-            dane = new Double[dlugosc+1];
-            for(int i = dlugosc; i>=0; i--){
-
->>>>>>> refs/remotes/piotrekm7/master
-            //    if(znak[i].getText().equals("-"))
-
+                    }
 
             }
-            if(flag==0) startEndAnimationAndPushNewState(new MiejscaZerowe(gsm));
+            layout.setText(sofiaProSoftMedium46px , blad1.getText());
+            blad1.setPosition(Polynomial.WIDTH -layout.width-10, -10);
+            blad1.setFontScale(0.6f);
+            blad1.setAlignment(2);
+            addActor(blad1);
+            blad1.setVisible(false);
+            layout.setText(sofiaProSoftMedium46px , blad2.getText());
+            blad2.setPosition(-layout.width/4+30, -layout.height/4-10);
+            blad2.setAlignment(2);
+            blad2.setFontScale(0.6f);
+            addActor(blad2);
+            blad2.setVisible(false);
+
+            if(flag==1){
+                blad1.setVisible(true);
+            }
+            else blad1.setVisible(false);
+
+            if(dane[0]==0.0){
+                blad2.setVisible(true);
+                }
+            else blad2.setVisible(false);
+            if(flag==0&&dane[0]!=0.0) startEndAnimationAndPushNewState(new MiejscaZerowe(gsm));
 
         }
 

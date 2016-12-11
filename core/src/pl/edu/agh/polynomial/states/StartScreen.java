@@ -31,11 +31,14 @@ import static pl.edu.agh.polynomial.Polynomial.skin;
 public class StartScreen extends State {
 
     private BitmapFont sofiaProSoftMedium46px = new BitmapFont(Gdx.files.internal("SofiaProSoftMedium46px.fnt"));
-    private Label podajStopien = new Label("Podaj stopień wielomianu 1-25" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+    private Label podajStopien = new Label("Podaj stopień wielomianu 1-24" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
     private GlyphLayout layout = new GlyphLayout(); // do mierzenia długości tekstu w px
     private TextField stopien;
     //private SelectBox <Integer> stopien;
     private Image dalej;
+
+
+    private Label blad1 = new  Label("Błąd! \n Podaj lliczbę z podanego zakresu" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
 
     public StartScreen(GameStateManager gsm) {
         super(gsm);
@@ -82,11 +85,20 @@ public class StartScreen extends State {
         startEnterAnimation();
     }
 
+
+
     @Override
     public void handleInput(float x, float y){
         if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-upY((int)dalej.getY())+dalej.getHeight()/2)*(y-upY((int)dalej.getY())+dalej.getHeight()/2) < dalej.getWidth()/2*dalej.getWidth()/2){
-            if(!stopien.getText().isEmpty() && Integer.parseInt(stopien.getText())<=25){
+            if(!stopien.getText().isEmpty() && Integer.parseInt(stopien.getText())<=24&&Integer.parseInt(stopien.getText())>0){
                 startEndAnimationAndPushNewState(new MainScreen(gsm , Integer.parseInt(stopien.getText())));
+            }
+            else{
+                layout.setText(sofiaProSoftMedium46px , blad1.getText());
+                blad1.setPosition(-layout.width/4+30, -layout.height/4-10);
+                blad1.setFontScale(0.6f);
+                blad1.setAlignment(2);
+                addActor(blad1);
             }
         }
     }
