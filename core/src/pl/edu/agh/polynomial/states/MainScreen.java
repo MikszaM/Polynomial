@@ -179,8 +179,8 @@ public class MainScreen extends State {
     @Override
     public void handleInput(float x, float y) {
         if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-upY((int)dalej.getY())+dalej.getHeight()/2)*(y-upY((int)dalej.getY())+dalej.getHeight()/2) < dalej.getWidth()/2*dalej.getWidth()/2){
-            dane = new Double[dlugosc];
-            for(int i = dlugosc; i<=0; i--){
+            dane = new Double[dlugosc+1];
+            for(int i = dlugosc; i>=0; i--){
 
             //    if(znak[i].getText().equals("-"))
 
