@@ -49,7 +49,8 @@ public class MainScreen extends State {
 
     private Image dalej;
 
-    private Image refresh;
+    private Label blad = new  Label("Podałeś błedne dane" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+
 
 
 
@@ -80,8 +81,7 @@ public class MainScreen extends State {
             int w = i % 5;
             wspolczynnik.setPosition(190*w+10,upY(h*65+150));
             wspolczynnik.setAlignment(Align.center);
-            wspolczynnik.setMaxLength(4);
-         //   wspolczynnik.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
+            wspolczynnik.setMaxLength(3);
             wspolczynniki.add(wspolczynnik);
 
             final int I = i;
@@ -93,26 +93,19 @@ public class MainScreen extends State {
                         wspolczynniki.get(I).setText("");
                         znak[I].setText("-");
                     }
-                    if(c=='0'){
-
-                        x[I].setVisible(false);
-                        potegi[I].setVisible(false);
-                        znak[I].setVisible(false);
-
-                        wspolczynniki.get(I).setVisible(false);
-                      //  wspolczynniki.get(I).setDisabled(true);
-
-                        for(int J=stopienWielomianu;J>=I;J--){
-                            wspolczynniki.get(J).setPosition(wspolczynniki.get(J-1).getX(),wspolczynniki.get(J-1).getY());
-                            znak[J].setPosition(znak[J-1].getX(),znak[J-1].getY());
-                            x[J].setPosition(x[J-1].getX(),x[J-1].getY());
-                            potegi[J].setPosition(potegi[J-1].getX(),potegi[J-1].getY());
-                            zero.setPosition(wspolczynniki.get(stopienWielomianu).getX()+wspolczynniki.get(stopienWielomianu).getWidth()/2+60,wspolczynniki.get(stopienWielomianu).getY());
-                        }
-                    }
+                    if(c=='+'){
+                        wspolczynniki.get(I).setText("");
+                        if(I!=0) znak[I].setText("+");
+                        else znak[I].setText("");
                 }
+                    if(c==','){
+                        wspolczynniki.get(I).setMaxLength(4);
+                    }
+                    if(c=='.'){
+                        wspolczynniki.get(I).setMaxLength(4);
+                    }
 
-            });
+            }});
 
 
             String pot;
@@ -122,18 +115,18 @@ public class MainScreen extends State {
             potegi[i] = new Label(pot, new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
             layout.setText(sofiaProSoftMedium46px , potegi[i].getText());
             potegi[i].setFontScale(0.5f);
-            potegi[i].setPosition(190*w+wspolczynnik.getWidth()/2+70,upY(h*65+130));
+            potegi[i].setPosition(190*w+wspolczynnik.getWidth()/2+80,upY(h*65+130));
 
             String pisz;
             if(stopienWielomianu-i != 0) pisz = "x";
             else pisz = " ";
             x[i] = new Label(pisz, new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
             layout.setText(sofiaProSoftMedium46px , x[i].getText());
-            x[i].setPosition( 190*w+wspolczynnik.getWidth()/2+50,upY(h*65+150) );
+            x[i].setPosition( 190*w+wspolczynnik.getWidth()/2+60,upY(h*65+150) );
 
             znak[i]=new Label("+", new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
             layout.setText(sofiaProSoftMedium46px , znak[i].getText());
-            znak[i].setPosition( 190*w+wspolczynnik.getWidth()/2-50,upY(h*65+150) );
+            znak[i].setPosition( 190*w+wspolczynnik.getWidth()/2-60,upY(h*65+150) );
             if (i==0) znak[i].setText("");
             if(i==stopienWielomianu){
                 layout.setText(sofiaProSoftMedium46px , zero.getText());
@@ -165,9 +158,7 @@ public class MainScreen extends State {
         addActor(dalej);
 
 
-        refresh=new Image(Polynomial.skin.getDrawable("dalej"));
-        refresh.setPosition(0,0);
-        addActor(refresh);
+
         Gdx.input.setInputProcessor(this);
         startEnterAnimation();
 
@@ -180,18 +171,25 @@ public class MainScreen extends State {
     public void handleInput(float x, float y) {
         if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-upY((int)dalej.getY())+dalej.getHeight()/2)*(y-upY((int)dalej.getY())+dalej.getHeight()/2) < dalej.getWidth()/2*dalej.getWidth()/2){
             dane = new Double[dlugosc];
-            for(int i = dlugosc; i<=0; i--){
+            int flag=0;
+            for(int i = 0; i<=dlugosc; i++){
+                try {
+                    dane[i]=Double.parseDouble(wspolczynniki.get(i).getText());
 
+                } catch (NumberFormatException e) {
+                    flag =1;
+                    layout.setText(sofiaProSoftMedium46px , podajWspolczynniki.getText());
+                    blad.setPosition(Polynomial.WIDTH/2-layout.width/2 , 100);
+                    addActor(blad);
+                }
             //    if(znak[i].getText().equals("-"))
 
-                 dane[i]=Double.parseDouble(wspolczynniki.get(i).getText());
+
             }
-            startEndAnimationAndPushNewState(new MiejscaZerowe(gsm));
+            if(flag==0) startEndAnimationAndPushNewState(new MiejscaZerowe(gsm));
+
         }
-        if((x-refresh.getX()-refresh.getWidth()/2)*(x-refresh.getX()-refresh.getWidth()/2) + (y-upY((int)refresh.getY())+refresh.getHeight()/2)*(y-upY((int)refresh.getY())+refresh.getHeight()/2) < refresh.getWidth()/2*refresh.getWidth()/2){
-            wspolczynniki.clear();
-            startEndAnimationAndPushNewState(new MainScreen(gsm,dlugosc ));
-        }
+
 
     }
 
