@@ -2,7 +2,10 @@ package pl.edu.agh.polynomial.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+
+import static pl.edu.agh.polynomial.Polynomial.skin;
 
 
 /**
@@ -11,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class MiejscaZerowe extends State {
     private Complex poly[];
+    private Image bg;
 
     private class Complex{
         private double real;
@@ -113,6 +117,8 @@ public class MiejscaZerowe extends State {
 
     public MiejscaZerowe(GameStateManager gsm){
         super(gsm);
+        bg = new Image(skin.getDrawable("bg"));
+        addActor(bg);
         poly = new Complex[MainScreen.getDane().length];
         int t=0;
         for(Double d:MainScreen.getDane()){

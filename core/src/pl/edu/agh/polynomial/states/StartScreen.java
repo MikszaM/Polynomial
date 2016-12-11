@@ -36,12 +36,15 @@ public class StartScreen extends State {
     private TextField stopien;
     //private SelectBox <Integer> stopien;
     private Image dalej;
+    private Image bg;
 
 
     private Label blad1 = new  Label("Błąd! \n Podaj lliczbę z podanego zakresu" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
 
     public StartScreen(GameStateManager gsm) {
         super(gsm);
+        bg = new Image(skin.getDrawable("bg"));
+        addActor(bg);
         layout.setText(sofiaProSoftMedium46px , podajStopien.getText());
         podajStopien.setPosition(Polynomial.WIDTH/2-layout.width/2 , upY(100));
         addActor(podajStopien);

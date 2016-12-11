@@ -17,6 +17,8 @@ import java.util.Iterator;
 
 import pl.edu.agh.polynomial.Polynomial;
 
+import static pl.edu.agh.polynomial.Polynomial.skin;
+
 /**
  * Created by Piotr Muras on 04.12.2016.
  */
@@ -51,12 +53,14 @@ public class MainScreen extends State {
 
     private Label blad1 = new  Label("Błąd! \n Podałeś błedne dane" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
     private Label blad2 = new  Label("Błąd! \n Współczynnik przy najwyższej \n potędze musi być różny od zera" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
-
+    private Image bg;
 
 
 
     MainScreen(GameStateManager gsm , final int stopienWielomianu){
         super(gsm);
+        bg = new Image(skin.getDrawable("bg"));
+        addActor(bg);
         dlugosc = stopienWielomianu;
         layout.setText(sofiaProSoftMedium46px , podajWspolczynniki.getText());
         podajWspolczynniki.setPosition(Polynomial.WIDTH/2-layout.width/2 , upY(75));

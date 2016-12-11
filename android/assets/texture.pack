@@ -3,23 +3,30 @@ texture.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+bg
+  rotate: false
+  xy: 1, 183
+  size: 1280, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
 dalej
   rotate: false
-  xy: 1, 63
-  size: 150, 150
-  orig: 150, 150
+  xy: 1, 56
+  size: 125, 125
+  orig: 125, 125
   offset: 0, 0
   index: -1
 ramka
   rotate: false
-  xy: 1, 1
+  xy: 1283, 843
   size: 110, 60
   orig: 110, 60
   offset: 0, 0
   index: -1
 white
   rotate: false
-  xy: 153, 160
+  xy: 1, 1
   size: 46, 53
   orig: 46, 53
   offset: 0, 0
