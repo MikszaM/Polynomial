@@ -216,7 +216,7 @@ public class MainScreen extends State {
                 blad2.setVisible(true);
                 }
             else blad2.setVisible(false);
-            if(flag==0&&dane[0]!=0.0) startEndAnimationAndPushNewState(new MiejscaZerowe(gsm));
+            if(flag==0&&dane[0]!=0.0) startEndAnimationAndPushNewState(new MenuScreen(gsm));
 
         }
 
