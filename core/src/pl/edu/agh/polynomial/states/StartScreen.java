@@ -51,7 +51,7 @@ public class StartScreen extends State {
         TextField.TextFieldStyle tStyle = new TextField.TextFieldStyle();
         tStyle.fontColor = Color.RED;
         tStyle.font = sofiaProSoftMedium46px;
-        tStyle.background = Polynomial.skin.getDrawable("ramka");
+        tStyle.background = Polynomial.skin.getDrawable("ramka1");
         stopien = new TextField("" , tStyle);
         stopien .setMessageText("0");
         stopien.setPosition(Polynomial.WIDTH/2-stopien.getWidth()/2,upY(200));
