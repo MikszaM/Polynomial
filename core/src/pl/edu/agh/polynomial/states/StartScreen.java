@@ -46,7 +46,7 @@ public class StartScreen extends State {
         bg = new Image(skin.getDrawable("bg"));
         addActor(bg);
         layout.setText(sofiaProSoftMedium46px , podajStopien.getText());
-        podajStopien.setPosition(Polynomial.WIDTH/2-layout.width/2 , upY(100));
+        podajStopien.setPosition(Polynomial.WIDTH/2-layout.width/2 , upY(75));
         addActor(podajStopien);
         TextField.TextFieldStyle tStyle = new TextField.TextFieldStyle();
         tStyle.fontColor = Color.RED;
@@ -54,7 +54,7 @@ public class StartScreen extends State {
         tStyle.background = Polynomial.skin.getDrawable("ramka1");
         stopien = new TextField("" , tStyle);
         stopien .setMessageText("0");
-        stopien.setPosition(Polynomial.WIDTH/2-stopien.getWidth()/2,upY(200));
+        stopien.setPosition(Polynomial.WIDTH/2-stopien.getWidth()/2,upY(230));
         stopien.setAlignment(Align.center);
         stopien.setMaxLength(2);
         stopien.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
