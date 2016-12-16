@@ -43,7 +43,7 @@ public class MainScreen extends State {
 
     private Label[] potegi;
 
-    private Label[] x;
+    private Label[] xi;
 
     private Label[] znak;
 
@@ -74,7 +74,7 @@ public class MainScreen extends State {
 
 
 
-        x = new Label[stopienWielomianu+1];
+        xi = new Label[stopienWielomianu+1];
         znak = new Label[stopienWielomianu+1];
         potegi = new Label[stopienWielomianu+1];
 
@@ -125,9 +125,9 @@ public class MainScreen extends State {
             String pisz;
             if(stopienWielomianu-i != 0) pisz = "x";
             else pisz = " ";
-            x[i] = new Label(pisz, new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
-            layout.setText(sofiaProSoftMedium46px , x[i].getText());
-            x[i].setPosition( 190*w+wspolczynnik.getWidth()/2+60,upY(h*75+150) );
+            xi[i] = new Label(pisz, new Label.LabelStyle(sofiaProSoftMedium46px,Color.BLACK));
+            layout.setText(sofiaProSoftMedium46px , xi[i].getText());
+            xi[i].setPosition( 190*w+wspolczynnik.getWidth()/2+60,upY(h*75+150) );
 
             znak[i]=new Label("+", new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
             layout.setText(sofiaProSoftMedium46px , znak[i].getText());
@@ -146,7 +146,7 @@ public class MainScreen extends State {
         }
 
 
-        for(Label i:x){
+        for(Label i:xi){
             addActor(i);
         }
         for(Label i:potegi){
@@ -219,7 +219,20 @@ public class MainScreen extends State {
                 blad2.setVisible(true);
                 }
             else blad2.setVisible(false);
-            if(flag==0&&dane[0]!=0.0) startEndAnimationAndPushNewState(new MenuScreen(gsm));
+            if(flag==0&&dane[0]!=0.0) {
+
+                for(int i = dlugosc; i>=0; i--){
+                   wspolczynniki.get(i).setText("");
+                    wspolczynniki.get(i).setVisible(false);
+                    znak[i].setText("");
+                    potegi[i].setText("");
+                    xi[i].setText("");
+                    }
+                    addActor(bg);
+                startEndAnimationAndPushNewState(new MenuScreen(gsm));
+                }
+
+
 
         }
 

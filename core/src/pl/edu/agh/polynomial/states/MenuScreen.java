@@ -10,12 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 
 import java.util.Iterator;
 
 import pl.edu.agh.polynomial.Polynomial;
 import sun.applet.Main;
 
+import static com.badlogic.gdx.Gdx.app;
 import static pl.edu.agh.polynomial.Polynomial.skin;
 
 /**
@@ -30,7 +32,11 @@ public class MenuScreen extends State {
 
     private Image bg;
 
-    private Image dalej;
+    private Image koniec;
+    private Image miejsca;
+    private Image wykres;
+    private Image wstecz;
+
 
     private Label[] potegi;
 
@@ -78,6 +84,7 @@ public class MenuScreen extends State {
 
 
                 wspolczynniki[i].setText(MainScreen.getDane()[i+z].toString().replaceAll("-"," "));
+                if(MainScreen.getDane()[i+z]==1.0) wspolczynniki[i].setText("");
                 layout.setText(sofiaProSoftMedium46px, wspolczynniki[i].getText());
 
                 wspolczynniki[i].setPosition(190 * w+40 , upY(h * 75 + 120));
@@ -117,30 +124,8 @@ public class MenuScreen extends State {
                 i--;
                 z++;
             };
-            if (i == stopienWielomianu-z) {
-
-
-            }
-
-
-
-
         }
 
-/*
-        for(Label i:x){
-            addActor(i);
-        }
-
-        for(Label i:potegi){
-            addActor(i);
-        }
-        for(Label i:znak){
-            addActor(i);
-        }
-        for(Label i:wspolczynniki){
-            addActor(i);
-        }*/
         if(MainScreen.getDane()[stopienWielomianu]==0.0){
             w1=w1-1;
             if(w1<0) {
@@ -153,11 +138,25 @@ public class MenuScreen extends State {
         zero.setPosition(190 * w1 + layout.width / 2 + 117, upY(h1 * 75 + 150));
         addActor(zero);
 
+        int miejsce;
+        if(stopienWielomianu>=22) miejsce=-30;
+        else miejsce =0;
 
-        dalej=new Image(Polynomial.skin.getDrawable("dalej"));
-        dalej.setPosition(Polynomial.WIDTH/2-dalej.getWidth()/2,0);
-        addActor(dalej);
+        koniec=new Image(Polynomial.skin.getDrawable("koniec"));
+        koniec.setPosition(Polynomial.WIDTH-koniec.getWidth(),miejsce);
+        addActor(koniec);
 
+        wstecz=new Image(Polynomial.skin.getDrawable("wstecz"));
+        wstecz.setPosition(0,miejsce);
+        addActor(wstecz);
+
+        miejsca=new Image(Polynomial.skin.getDrawable("miejsca"));
+        miejsca.setPosition(2*Polynomial.WIDTH/5-miejsca.getWidth()/2,miejsce);
+        addActor(miejsca);
+
+        wykres=new Image(Polynomial.skin.getDrawable("wykres"));
+        wykres.setPosition(3*Polynomial.WIDTH/5-miejsca.getWidth()/2,miejsce);
+        addActor(wykres);
 
 
         Gdx.input.setInputProcessor(this);
@@ -174,9 +173,32 @@ public class MenuScreen extends State {
 
     @Override
     public void handleInput(float x, float y) {
-        if((x-dalej.getX()-dalej.getWidth()/2)*(x-dalej.getX()-dalej.getWidth()/2) + (y-upY((int)dalej.getY())+dalej.getHeight()/2)*(y-upY((int)dalej.getY())+dalej.getHeight()/2) < dalej.getWidth()/2*dalej.getWidth()/2){
-            startEndAnimationAndPushNewState(new MiejscaZerowe(gsm));
-        }
+
+            if((x-koniec.getX()-koniec.getWidth()/2)*(x-koniec.getX()-koniec.getWidth()/2) + (y-upY((int)koniec.getY())+koniec.getHeight()/2)*(y-upY((int)koniec.getY())+koniec.getHeight()/2) < koniec.getWidth()/2*koniec.getWidth()/2) {
+                startEndAnimationAndPopState();
+
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        app.exit();
+
+                    }
+                }, 0.75f);
+            }
+
+            if((x-wstecz.getX()-wstecz.getWidth()/2)*(x-wstecz.getX()-wstecz.getWidth()/2) + (y-upY((int)wstecz.getY())+wstecz.getHeight()/2)*(y-upY((int)wstecz.getY())+wstecz.getHeight()/2) < wstecz.getWidth()/2*wstecz.getWidth()/2) {
+
+                   startEndAnimationAndPushNewState(new StartScreen(gsm));
+            }
+            if((x-miejsca.getX()-miejsca.getWidth()/2)*(x-miejsca.getX()-miejsca.getWidth()/2) + (y-upY((int)miejsca.getY())+miejsca.getHeight()/2)*(y-upY((int)miejsca.getY())+miejsca.getHeight()/2) < miejsca.getWidth()/2*miejsca.getWidth()/2) {
+
+                 startEndAnimationAndPushNewState(new MiejscaZerowe(gsm));
+            }
+            if((x-wykres.getX()-wykres.getWidth()/2)*(x-wykres.getX()-wykres.getWidth()/2) + (y-upY((int)wykres.getY())+wykres.getHeight()/2)*(y-upY((int)wykres.getY())+wykres.getHeight()/2) < wykres.getWidth()/2*wykres.getWidth()/2) {
+                startEndAnimationAndPushNewState(new Graph(gsm));
+             }
+
+
 
     }
 

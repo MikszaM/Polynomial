@@ -38,11 +38,31 @@ ramka1
   orig: 135, 90
   offset: 0, 0
   index: -1
-ramka2
+wykres
   rotate: false
   xy: 405, 58
   size: 190, 120
   orig: 190, 120
   offset: 0, 0
   index: -1
-
+koniec
+  rotate: false
+  xy: 630, 58
+  size: 160, 125
+  orig: 160, 125
+  offset: 0, 0
+  index: -1
+wstecz
+  rotate: false
+  xy: 815, 58
+  size: 160, 125
+  orig: 160, 125
+  offset: 0, 0
+  index: -1
+miejsca
+  rotate: false
+  xy: 1000, 58
+  size: 190, 120
+  orig: 190, 120
+  offset: 0, 0
+  index: -1
