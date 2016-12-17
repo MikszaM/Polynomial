@@ -84,7 +84,7 @@ public class MenuScreen extends State {
 
 
                 wspolczynniki[i].setText(MainScreen.getDane()[i+z].toString().replaceAll("-"," "));
-                if(MainScreen.getDane()[i+z]==1.0) wspolczynniki[i].setText("");
+                if(MainScreen.getDane()[i+z]==1.0&&i+z!=stopienWielomianu) wspolczynniki[i].setText("");
                 layout.setText(sofiaProSoftMedium46px, wspolczynniki[i].getText());
 
                 wspolczynniki[i].setPosition(190 * w+40 , upY(h * 75 + 120));
