@@ -25,7 +25,7 @@ public class MiejscaZerowe extends State {
         return droots;
     }
 
-    private class Complex {
+    public static class Complex {
         private double real;
         private double imaginary;
 
@@ -129,10 +129,7 @@ public class MiejscaZerowe extends State {
         }
     }
 
-    public MiejscaZerowe(GameStateManager gsm) {
-        super(gsm);
-        bg = new Image(skin.getDrawable("bg"));
-        addActor(bg);
+    public static void licz(){
         double poly[] = new double[MainScreen.getDane().length];
         int t = 0;
         for (Double d : MainScreen.getDane()) {
@@ -141,18 +138,26 @@ public class MiejscaZerowe extends State {
 
         roots = new Complex[poly.length-1];
         roots = findRoots(poly);
-        for (Complex c : roots) {
-            System.out.println(c.getReal() + "   " + c.getImaginary() + "i");
-        }
+
 
         droots = new Complex[poly.length-2];
         droots = findRoots(countDerive(poly));
+    }
+
+    public MiejscaZerowe(GameStateManager gsm) {
+        super(gsm);
+        bg = new Image(skin.getDrawable("bg"));
+        addActor(bg);
+        licz();
+        for (Complex c : droots) {
+            System.out.println(c.getReal() + "   " + c.getImaginary() + "i");
+        }
 
         Gdx.input.setInputProcessor(this);
         startEnterAnimation();
     }
 
-    private double[] countDerive(double poly[]) {
+    private static double[] countDerive(double poly[]) {
         double derive[] = new double[poly.length - 1];
         for (int i = 0; i < derive.length; i++) {
             derive[i] = poly[i]*(derive.length - i);
@@ -171,12 +176,12 @@ public class MiejscaZerowe extends State {
         draw();
     }
 
-    public Complex[] findRoots(double[] coeffs) {
+    public static Complex[] findRoots(double[] coeffs) {
         PolynomialSolver polynomialSolver = new PolynomialSolver();
         return polynomialSolver.rpoly(coeffs);
     }
 
-    private class PolynomialSolver {
+    private static class PolynomialSolver {
         //algorytm Jenkinsa-Trauba
 
         private static final double eta = 2.22E-16;
@@ -707,7 +712,7 @@ public class MiejscaZerowe extends State {
         rem[1] = b;
     }
 
-    private Complex[] quad(double a, double b, double c) {
+    private static Complex[] quad(double a, double b, double c) {
         if (a == 0 && b == 0) {
             return new Complex[]{new Complex(0), new Complex(0)};
         }
