@@ -14,6 +14,16 @@ import static pl.edu.agh.polynomial.Polynomial.skin;
 public class MiejscaZerowe extends State {
     private Complex poly[];
     private Image bg;
+    private static Complex roots[];
+    private static Complex droots[];
+
+    public static Complex[] getRoots() {
+        return roots;
+    }
+
+    public static Complex[] getDroots() { // pierwiastki pochodnej
+        return droots;
+    }
 
     private class Complex {
         private double real;
@@ -129,19 +139,23 @@ public class MiejscaZerowe extends State {
             poly[t++] = d;
         }
 
-        Complex x[] = findRoots(poly);
-        for (Complex c : x) {
+        roots = new Complex[poly.length-1];
+        roots = findRoots(poly);
+        for (Complex c : roots) {
             System.out.println(c.getReal() + "   " + c.getImaginary() + "i");
         }
+
+        droots = new Complex[poly.length-2];
+        droots = findRoots(countDerive(poly));
 
         Gdx.input.setInputProcessor(this);
         startEnterAnimation();
     }
 
-    private Complex[] countDerive(Complex poly[]) {
-        Complex derive[] = new Complex[poly.length - 1];
+    private double[] countDerive(double poly[]) {
+        double derive[] = new double[poly.length - 1];
         for (int i = 0; i < derive.length; i++) {
-            derive[i] = poly[i].multiplication(derive.length - i);
+            derive[i] = poly[i]*(derive.length - i);
         }
         return derive;
     }
