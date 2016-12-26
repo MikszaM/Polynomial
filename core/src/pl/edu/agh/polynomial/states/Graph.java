@@ -9,15 +9,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Sort;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
 import pl.edu.agh.polynomial.Polynomial;
+import sun.applet.Main;
 
 
+import static java.lang.Math.max;
 import static pl.edu.agh.polynomial.Polynomial.skin;
 import static pl.edu.agh.polynomial.states.MiejscaZerowe.*;
 
@@ -32,6 +33,22 @@ public class Graph extends State {
     private Label x = new Label("x" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
     private Label y =new Label("y" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
     private ArrayList<Double> root=new ArrayList<Double>();
+    private ArrayList<Double> values=new ArrayList<Double>();
+
+    private double xmin;
+    private double xmax;
+    private double h1;
+    private double h2;
+    private double ymin;
+    private double ymax;
+    private double przedzial;
+    double f(double x){
+        Double y=0.0;
+        for(int i=0;i<MainScreen.getDane().length;i++){
+            y= y+MainScreen.getDane()[i]*Math.pow(x,MainScreen.getDane().length-i-1);
+        }
+        return y;
+    }
 
     public Graph(GameStateManager gsm) {
         super(gsm);
@@ -59,7 +76,32 @@ public class Graph extends State {
 
         for(int j=0;j<root.size();j++){
             System.out.println(root.get(j));
+            values.add(f(root.get(j)));
         }
+        xmin=root.get(0);
+        // System.out.println(Math.round(wartosc(1.5)*100.0)/100.0);
+        xmax=root.get(root.size()-1);
+
+        przedzial=max(1.0,(max(Math.abs(xmax),Math.abs(xmin)))*1.2);
+
+       // h1=max(0.1 ,Math.abs((xmax-xmin)/80));
+        h1=przedzial/200;
+
+        values.add(f(-100*h1));
+        values.add(f(100*h1));
+
+        Collections.sort(values);
+
+        for(int j=0;j<values.size();j++){
+            System.out.println(values.get(j));
+        }
+
+        ymin=values.get(0);
+        ymax=values.get(values.size()-1);
+
+
+
+        h2=max(Math.abs(ymax),Math.abs(ymin));
 
 
 
@@ -88,17 +130,25 @@ public class Graph extends State {
 
         sr.setProjectionMatrix(camera.combined);
 
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
+
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.rectLine(Gdx.graphics.getWidth()/2,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),4);
-        sr.rectLine(0,Gdx.graphics.getHeight()/2,Gdx.graphics.getWidth(),Gdx.graphics.getHeight()/2,4);
 
-        sr.rectLine(30*Gdx.graphics.getWidth()/31,20*Gdx.graphics.getHeight()/42,Gdx.graphics.getWidth(),Gdx.graphics.getHeight()/2,4);
-        sr.rectLine(30*Gdx.graphics.getWidth()/31,22*Gdx.graphics.getHeight()/42,Gdx.graphics.getWidth(),Gdx.graphics.getHeight()/2,4);
+        sr.rectLine(w/2,0,w/2,h,4);
+        sr.rectLine(0,h/2,w,h/2,4);
 
-        sr.rectLine(30*Gdx.graphics.getWidth()/62,20*Gdx.graphics.getHeight()/21,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),4);
-        sr.rectLine(32*Gdx.graphics.getWidth()/62,20*Gdx.graphics.getHeight()/21,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),4);
+        sr.rectLine(30*w/31,20*h/42,w,h/2,4);
+        sr.rectLine(30*w/31,22*h/42,w,h/2,4);
 
-        getRoots();
+        sr.rectLine(30*w/62,20*h/21,w/2,h,4);
+        sr.rectLine(32*w/62,20*h/21,w/2,h,4);
+
+        for(double i=-100; i<100;i++){
+            //sr.rectLine((float) (w*i/przedzial+w/2) ,(float) (f(i * h1)+h/2),(float) (w*(i+1)/przedzial+w/2),(float) (f((i+1)*h1)+h/2),4);
+            sr.rectLine((float) (w*i/200+w/2) ,(float) (f(i*h1)*h/2/h2+h/2),(float) (w*(i+1)/200+w/2),(float) (f((i+1)*h1)*h/2/h2+h/2),4);
+          //  sr.rectLine(((i + 10) * w) / 100,  (float)(100*(f(xmin + i * h1))) ,((i+1+10)*w)/100, (float)(100*(f(xmin + (i+1) * h1))),4);
+        }
 
 
         sr.end();
