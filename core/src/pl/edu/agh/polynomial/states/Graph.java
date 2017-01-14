@@ -18,6 +18,7 @@ import pl.edu.agh.polynomial.Polynomial;
 import sun.applet.Main;
 
 
+import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import static pl.edu.agh.polynomial.Polynomial.skin;
 import static pl.edu.agh.polynomial.states.MiejscaZerowe.*;
@@ -79,12 +80,10 @@ public class Graph extends State {
             values.add(f(root.get(j)));
         }
         xmin=root.get(0);
-        // System.out.println(Math.round(wartosc(1.5)*100.0)/100.0);
         xmax=root.get(root.size()-1);
 
-        przedzial=max(1.0,(max(Math.abs(xmax),Math.abs(xmin)))*1.2);
+        przedzial=max(abs(4*xmin) , abs(4*xmax));
 
-       // h1=max(0.1 ,Math.abs((xmax-xmin)/80));
         h1=przedzial/200;
 
         values.add(f(-100*h1));
@@ -135,19 +134,18 @@ public class Graph extends State {
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
 
-        sr.rectLine(w/2,0,w/2,h,4);
-        sr.rectLine(0,h/2,w,h/2,4);
+        sr.rectLine(w/2,0,w/2,h,1);
+        sr.rectLine(0,h/2,w,h/2,1);
 
-        sr.rectLine(30*w/31,20*h/42,w,h/2,4);
-        sr.rectLine(30*w/31,22*h/42,w,h/2,4);
+        sr.rectLine(30*w/31,20*h/42,w,h/2,1);
+        sr.rectLine(30*w/31,22*h/42,w,h/2,1);
 
-        sr.rectLine(30*w/62,20*h/21,w/2,h,4);
-        sr.rectLine(32*w/62,20*h/21,w/2,h,4);
+        sr.rectLine(30*w/62,20*h/21,w/2,h,1);
+        sr.rectLine(32*w/62,20*h/21,w/2,h,1);
 
         for(double i=-100; i<100;i++){
-            //sr.rectLine((float) (w*i/przedzial+w/2) ,(float) (f(i * h1)+h/2),(float) (w*(i+1)/przedzial+w/2),(float) (f((i+1)*h1)+h/2),4);
-            sr.rectLine((float) (w*i/200+w/2) ,(float) (f(i*h1)*h/2/h2+h/2),(float) (w*(i+1)/200+w/2),(float) (f((i+1)*h1)*h/2/h2+h/2),4);
-          //  sr.rectLine(((i + 10) * w) / 100,  (float)(100*(f(xmin + i * h1))) ,((i+1+10)*w)/100, (float)(100*(f(xmin + (i+1) * h1))),4);
+            sr.setColor(Color.BLUE);
+            sr.rectLine((float) (w*i/200+w/2) ,(float) (f(i*h1)*h/2/h2+h/2),(float) (w*(i+1)/200+w/2),(float) (f((i+1)*h1)*h/2/h2+h/2),1);
         }
 
 
