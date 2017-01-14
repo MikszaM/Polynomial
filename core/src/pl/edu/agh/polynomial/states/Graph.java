@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -20,6 +21,7 @@ import sun.applet.Main;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
+import static java.lang.Math.pow;
 import static pl.edu.agh.polynomial.Polynomial.skin;
 import static pl.edu.agh.polynomial.states.MiejscaZerowe.*;
 
@@ -37,6 +39,18 @@ public class Graph extends State {
     private ArrayList<Double> values=new ArrayList<Double>();
     private Image wstecz;
 
+    private Label sxp = new Label("1" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+    private Label sxm = new Label("-1" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+    private Label syp = new Label("10" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+    private Label sym = new Label("-10" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+
+    private Label sxppow = new Label("1" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+    private Label sxmpow = new Label("-1" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+    private Label syppow = new Label("10" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+    private Label sympow = new Label("-10" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
+
+    private GlyphLayout layout = new GlyphLayout(); // do mierzenia długości tekstu w px
+
     private double xmin;
     private double xmax;
     private double h1;
@@ -44,6 +58,8 @@ public class Graph extends State {
     private double ymin;
     private double ymax;
     private double przedzial;
+    private double n1;
+    private double n2;
     double f(double x){
         Double y=0.0;
         for(int i=0;i<MainScreen.getDane().length;i++){
@@ -77,13 +93,17 @@ public class Graph extends State {
        Collections.sort(root);
 
         for(int j=0;j<root.size();j++){
-            System.out.println(root.get(j));
+          //  System.out.println(root.get(j));
             values.add(f(root.get(j)));
         }
         xmin=root.get(0);
         xmax=root.get(root.size()-1);
 
         przedzial=max(1, max(abs(4*xmin) , abs(4*xmax)));
+
+        n1=Math.ceil(Math.log10(przedzial/2));
+        System.out.println(przedzial/2);
+        System.out.println((Math.pow(10,n1-1)));
 
         h1=przedzial/200;
 
@@ -93,7 +113,7 @@ public class Graph extends State {
         Collections.sort(values);
 
         for(int j=0;j<values.size();j++){
-            System.out.println(values.get(j));
+          //  System.out.println(values.get(j));
         }
 
         ymin=values.get(0);
@@ -102,11 +122,85 @@ public class Graph extends State {
 
 
         h2=max(Math.abs(ymax),Math.abs(ymin));
-
+        n2=Math.ceil(Math.log10(h2));
+      //  System.out.println(h2);
+       // System.out.println(n2);
+       // System.out.println((Math.pow(10,n2-1)));
 
         wstecz=new Image(Polynomial.skin.getDrawable("wstecz"));
         wstecz.setPosition(0,0);
         addActor(wstecz);
+
+        if(n1-1==0) {
+            sxp.setText("1");
+            sxm.setText("-1");
+        }
+        else {
+            sxp.setText("10");
+            sxm.setText("-10");
+        }
+        if(n2-1==0) {
+            syp.setText("1");
+            sym.setText("-1");
+        }
+        else {
+            syp.setText("10");
+            sym.setText("-10");
+        }
+        if(n1-1==1||n1-1==0){
+            sxppow.setText(" ");
+            sxmpow.setText(" ");
+        }
+        else{
+            sxppow.setText(Integer.toString((int)(n1-1)));
+            sxmpow.setText(Integer.toString((int)(n1-1)));
+        }
+        if(n2-1==1||n2-1==0){
+            syppow.setText(" ");
+            sympow.setText(" ");
+        }
+        else{
+            syppow.setText(Integer.toString((int)(n2-1)));
+            sympow.setText(Integer.toString((int)(n2-1)));
+        }
+        layout.setText(sofiaProSoftMedium46px, sxp.getText());
+        sxp.setPosition((float) (Polynomial.WIDTH/2+(Math.pow(10,n1-1)/(przedzial/2))*Polynomial.WIDTH/2-layout.width/2) , (Polynomial.HEIGHT/2-60));
+        addActor(sxp);
+
+        sxppow.setPosition((float) (Polynomial.WIDTH/2+(Math.pow(10,n1-1)/(przedzial/2))*Polynomial.WIDTH/2-layout.width/2+55) , (Polynomial.HEIGHT/2-45));
+        sxppow.setFontScale(0.5f);
+        addActor(sxppow);
+
+
+        layout.setText(sofiaProSoftMedium46px, sxm.getText());
+        sxm.setPosition((float) (Polynomial.WIDTH/2-(Math.pow(10,n1-1)/(przedzial/2))*Polynomial.WIDTH/2-layout.width/2) , (Polynomial.HEIGHT/2-60));
+        addActor(sxm);
+
+        sxmpow.setPosition((float) (Polynomial.WIDTH/2-(Math.pow(10,n1-1)/(przedzial/2))*Polynomial.WIDTH/2-layout.width/2+70) , (Polynomial.HEIGHT/2-45));
+        sxmpow.setFontScale(0.5f);
+        addActor(sxmpow);
+////////////////////////
+        layout.setText(sofiaProSoftMedium46px, syp.getText());
+        syp.setPosition((Polynomial.WIDTH/2-87) , (float) (Polynomial.HEIGHT/2+(Math.pow(10,n2-1)/(h2))*Polynomial.HEIGHT/2)-layout.height);
+        addActor(syp);
+
+        syppow.setPosition((Polynomial.WIDTH/2-30) , (float) (Polynomial.HEIGHT/2+(Math.pow(10,n2-1)/(h2))*Polynomial.HEIGHT/2)-layout.height+10);
+        syppow.setFontScale(0.5f);
+        addActor(syppow);
+
+        layout.setText(sofiaProSoftMedium46px, sym.getText());
+        sym.setPosition((Polynomial.WIDTH/2-100) , (float) (Polynomial.HEIGHT/2-(Math.pow(10,n2-1)/(h2))*Polynomial.HEIGHT/2)-layout.height);
+        addActor(sym);
+
+        sympow.setPosition((Polynomial.WIDTH/2-30) , (float) (Polynomial.HEIGHT/2-(Math.pow(10,n2-1)/(h2))*Polynomial.HEIGHT/2)-layout.height+10);
+        sympow.setFontScale(0.5f);
+        addActor(sympow);
+
+
+
+
+
+
         Gdx.input.setInputProcessor(this);
     }
 
@@ -139,19 +233,26 @@ public class Graph extends State {
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
 
-        sr.rectLine(w/2,0,w/2,h,1);
-        sr.rectLine(0,h/2,w,h/2,1);
+        sr.rectLine(w/2,0,w/2,h,5);
+        sr.rectLine(0,h/2,w,h/2,5);
 
-        sr.rectLine(30*w/31,20*h/42,w,h/2,1);
-        sr.rectLine(30*w/31,22*h/42,w,h/2,1);
+        sr.rectLine(30*w/31,20*h/42,w,h/2,5);
+        sr.rectLine(30*w/31,22*h/42,w,h/2,5);
 
-        sr.rectLine(30*w/62,20*h/21,w/2,h,1);
-        sr.rectLine(32*w/62,20*h/21,w/2,h,1);
+        sr.rectLine(30*w/62,20*h/21,w/2,h,5);
+        sr.rectLine(32*w/62,20*h/21,w/2,h,5);
 
         for(double i=-100; i<100;i++){
             sr.setColor(Color.BLUE);
-            sr.rectLine((float) (w*i/200+w/2) ,(float) (f(i*h1)*h/2/h2+h/2),(float) (w*(i+1)/200+w/2),(float) (f((i+1)*h1)*h/2/h2+h/2),1);
+            sr.rectLine((float) (w*i/200+w/2) ,(float) (f(i*h1)*h/2/h2+h/2),(float) (w*(i+1)/200+w/2),(float) (f((i+1)*h1)*h/2/h2+h/2),5);
         }
+        sr.setColor(Color.RED);
+
+        sr.rectLine((float) (w/2+(Math.pow(10,n1-1)/(przedzial/2))*w/2) , (h/2+10),(float) (w/2+(Math.pow(10,n1-1)/(przedzial/2))*w/2), h/2-10,5);
+        sr.rectLine((float) (w/2-(Math.pow(10,n1-1)/(przedzial/2))*w/2) , (h/2+10),(float) (w/2-(Math.pow(10,n1-1)/(przedzial/2))*w/2), h/2-10,5);
+
+        sr.rectLine((w/2+10) , (float) (h/2+(Math.pow(10,n2-1)/(h2))*h/2),(w/2-10), (float) (h/2+(Math.pow(10,n2-1)/(h2))*h/2),5);
+        sr.rectLine((w/2+10) , (float) (h/2-(Math.pow(10,n2-1)/(h2))*h/2),(w/2-10), (float) (h/2-(Math.pow(10,n2-1)/(h2))*h/2),5);
 
 
         sr.end();

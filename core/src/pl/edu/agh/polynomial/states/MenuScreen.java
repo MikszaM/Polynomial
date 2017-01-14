@@ -84,10 +84,14 @@ public class MenuScreen extends State {
 
 
                 wspolczynniki[i].setText(MainScreen.getDane()[i+z].toString().replaceAll("-"," "));
-                if(MainScreen.getDane()[i+z]==1.0&&i+z!=stopienWielomianu) wspolczynniki[i].setText("");
+                //if(MainScreen.getDane()[i+z]==1.0&&i+z!=stopienWielomianu) wspolczynniki[i].setText("");
                 layout.setText(sofiaProSoftMedium46px, wspolczynniki[i].getText());
 
                 wspolczynniki[i].setPosition(190 * w+40 , upY(h * 75 + 120));
+                if(MainScreen.getDane()[i+z]==1.0&&i+z!=stopienWielomianu) {
+                    wspolczynniki[i].setVisible(false);
+                }
+
 
 
                 String pot;
@@ -135,7 +139,11 @@ public class MenuScreen extends State {
             }
 
        }
-        zero.setPosition(190 * w1 + layout.width / 2 + 117, upY(h1 * 75 + 150));
+        if(MainScreen.getDane()[stopienWielomianu]==0.0){
+            zero.setPosition(190 * w1 + layout.width / 2 + 117, upY(h1 * 75 + 150));
+        }else {
+            zero.setPosition(190 * w1 + layout.width / 2 + 95, upY(h1 * 75 + 150));
+            }
         addActor(zero);
 
         int miejsce;

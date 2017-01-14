@@ -162,12 +162,16 @@ public class MiejscaZerowe extends State {
         Gdx.input.setInputProcessor(this);
         startEnterAnimation();
         title = new Label("Miejsca zerowe" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
-        title.setPosition(20 , upY(60));
+        title.setPosition(Polynomial.WIDTH/2 -title.getWidth()/2, upY(60));
         addActor(title);
         showRoots = new Label[roots.length];
         for(int i=0 ; i<showRoots.length ; i++){
-            showRoots[i] = new Label(""+Math.round(MiejscaZerowe.getRoots()[i].getReal()*100.0)/100.0+"   "+Math.round(MiejscaZerowe.getRoots()[i].getImaginary()*100.0)/100.0+"i" , new Label.LabelStyle(sofiaProSoftMedium34px , Color.BLACK));
-            showRoots[i].setPosition(30+270*(i/8) , upY(100+(i%8)*40));
+            if(Math.round(MiejscaZerowe.getRoots()[i].getImaginary()*100.0)/100.0!=0) {
+                showRoots[i] = new Label("" + Math.round(MiejscaZerowe.getRoots()[i].getReal() * 100.0) / 100.0 + " +  " + Math.round(MiejscaZerowe.getRoots()[i].getImaginary() * 100.0) / 100.0 + "i", new Label.LabelStyle(sofiaProSoftMedium34px, Color.BLACK));
+            }
+            else showRoots[i] = new Label("" + Math.round(MiejscaZerowe.getRoots()[i].getReal() * 100.0) / 100.0, new Label.LabelStyle(sofiaProSoftMedium34px, Color.BLACK));
+
+            showRoots[i].setPosition(30+350*(i/8) , upY(120+(i%8)*39));
             addActor(showRoots[i]);
         }
         wstecz=new Image(Polynomial.skin.getDrawable("wstecz"));
