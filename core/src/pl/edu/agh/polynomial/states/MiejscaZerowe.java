@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 
+import pl.edu.agh.polynomial.Polynomial;
+
 import static pl.edu.agh.polynomial.Polynomial.skin;
 
 
@@ -23,6 +25,7 @@ public class MiejscaZerowe extends State {
     private Label showRoots[] , title;
     private BitmapFont sofiaProSoftMedium34px = new BitmapFont(Gdx.files.internal("SofiaProSoftMedium34px.fnt"));
     private BitmapFont sofiaProSoftMedium46px = new BitmapFont(Gdx.files.internal("SofiaProSoftMedium46px.fnt"));
+    private Image wstecz;
 
     public static Complex[] getRoots() {
         return roots;
@@ -167,6 +170,9 @@ public class MiejscaZerowe extends State {
             showRoots[i].setPosition(30+270*(i/8) , upY(100+(i%8)*40));
             addActor(showRoots[i]);
         }
+        wstecz=new Image(Polynomial.skin.getDrawable("wstecz"));
+        wstecz.setPosition(0,0);
+        addActor(wstecz);
     }
 
     private static double[] countDerive(double poly[]) {
@@ -179,7 +185,10 @@ public class MiejscaZerowe extends State {
 
     @Override
     public void handleInput(float x, float y) {
+        if((x-wstecz.getX()-wstecz.getWidth()/2)*(x-wstecz.getX()-wstecz.getWidth()/2) + (y-upY((int)wstecz.getY())+wstecz.getHeight()/2)*(y-upY((int)wstecz.getY())+wstecz.getHeight()/2) < wstecz.getWidth()/2*wstecz.getWidth()/2) {
 
+            startEndAnimationAndPopState();
+        }
     }
 
     @Override
