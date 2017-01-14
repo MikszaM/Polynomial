@@ -35,6 +35,7 @@ public class Graph extends State {
     private Label y =new Label("y" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
     private ArrayList<Double> root=new ArrayList<Double>();
     private ArrayList<Double> values=new ArrayList<Double>();
+    private Image wstecz;
 
     private double xmin;
     private double xmax;
@@ -82,7 +83,7 @@ public class Graph extends State {
         xmin=root.get(0);
         xmax=root.get(root.size()-1);
 
-        przedzial=max(abs(4*xmin) , abs(4*xmax));
+        przedzial=max(1, max(abs(4*xmin) , abs(4*xmax)));
 
         h1=przedzial/200;
 
@@ -103,16 +104,20 @@ public class Graph extends State {
         h2=max(Math.abs(ymax),Math.abs(ymin));
 
 
-
-
-
+        wstecz=new Image(Polynomial.skin.getDrawable("wstecz"));
+        wstecz.setPosition(0,0);
+        addActor(wstecz);
+        Gdx.input.setInputProcessor(this);
     }
 
 
 
     @Override
     public void handleInput(float x, float y) {
+        if((x-wstecz.getX()-wstecz.getWidth()/2)*(x-wstecz.getX()-wstecz.getWidth()/2) + (y-upY((int)wstecz.getY())+wstecz.getHeight()/2)*(y-upY((int)wstecz.getY())+wstecz.getHeight()/2) < wstecz.getWidth()/2*wstecz.getWidth()/2) {
 
+            startEndAnimationAndPopState();
+        }
     }
 
     @Override
