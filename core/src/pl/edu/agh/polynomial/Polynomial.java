@@ -26,7 +26,6 @@ public class Polynomial extends ApplicationAdapter {
 	@Override
 	public void create() {
 		skin = new Skin(new TextureAtlas("texture.pack"));
-		skin = new Skin(Gdx.files.internal("UISKin.json"), new TextureAtlas("texture.pack"));
 		batch = new SpriteBatch();
 		gsm = new GameStateManager();
 		Gdx.gl.glClearColor(1, 1, 0, 1);
