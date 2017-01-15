@@ -31,7 +31,7 @@ public class MainScreen extends State {
 
     private Label zero = new Label("=0" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
 
-    private static Array<TextField> wspolczynniki = new Array<TextField>();
+    private static Array<TextField> wspolczynniki;
 
     public static Array<TextField> getWspolczynniki() {
         return wspolczynniki;
@@ -61,6 +61,7 @@ public class MainScreen extends State {
         super(gsm);
         bg = new Image(skin.getDrawable("bg"));
         addActor(bg);
+        wspolczynniki = new Array<TextField>();
         dlugosc = stopienWielomianu;
         layout.setText(sofiaProSoftMedium46px , podajWspolczynniki.getText());
         podajWspolczynniki.setPosition(Polynomial.WIDTH/2-layout.width/2 , upY(75));
