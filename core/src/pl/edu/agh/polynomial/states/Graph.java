@@ -99,7 +99,10 @@ public class Graph extends State {
         xmin=root.get(0);
         xmax=root.get(root.size()-1);
 
-        przedzial=max(1, max(abs(4*xmin) , abs(4*xmax)));
+        przedzial=max(abs(4*xmin) , abs(4*xmax));
+        if(przedzial==0){
+            przedzial=10;
+        }
 
         n1=Math.ceil(Math.log10(przedzial/2));
         System.out.println(przedzial/2);
