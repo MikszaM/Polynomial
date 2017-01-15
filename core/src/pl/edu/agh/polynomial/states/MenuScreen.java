@@ -104,11 +104,15 @@ public class MenuScreen extends State {
                 potegi[i+z].setPosition(190 * w + layout.width / 2 + 120, upY(h * 75 + 130));
 
                 String pisz;
-                if (stopienWielomianu - i-z != 0) pisz = "x";
+                if (stopienWielomianu - i-z > 0) pisz = "x";
                 else pisz = " ";
-                x[i-z] = new Label(pisz, new Label.LabelStyle(sofiaProSoftMedium46px, Color.BLACK));
+                if(z<=i){
+                    x[i-z] = new Label(pisz, new Label.LabelStyle(sofiaProSoftMedium46px, Color.BLACK));
 
-                x[i-z].setPosition(190 * w + layout.width / 2 + 100, upY(h * 75 + 150));
+                    x[i-z].setPosition(190 * w + layout.width / 2 + 100, upY(h * 75 + 150));
+                    addActor(x[i-z]);
+                }
+
 
                 znak[i+z] = new Label("+", new Label.LabelStyle(sofiaProSoftMedium46px, Color.BLACK));
 
@@ -116,7 +120,7 @@ public class MenuScreen extends State {
                 znak[i+z].setPosition(190 * w + layout.width/2-40, upY(h * 75 + 150 ));
                 if(MainScreen.getDane()[i+z]<0) znak[i+z].setText("-");
 
-                addActor(x[i-z]);
+
                 addActor(potegi[i+z]);
                 addActor(znak[i+z]);
                 addActor(wspolczynniki[i]);
