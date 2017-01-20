@@ -37,6 +37,7 @@ public class StartScreen extends State {
     //private SelectBox <Integer> stopien;
     private Image dalej;
     private Image bg;
+    private Image Copyright;
 
 
     private Label blad1 = new  Label("Błąd! \n Podaj lliczbę z podanego zakresu" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
@@ -45,6 +46,13 @@ public class StartScreen extends State {
         super(gsm);
         bg = new Image(skin.getDrawable("bg"));
         addActor(bg);
+
+        Copyright=new Image(Polynomial.skin.getDrawable("Copyright"));
+        Copyright.setScale(0.58f);
+        Copyright.setPosition(0,upY((int) (Copyright.getHeight()*0.85)));
+        addActor(Copyright);
+
+
         layout.setText(sofiaProSoftMedium46px , podajStopien.getText());
         podajStopien.setPosition(Polynomial.WIDTH/2-layout.width/2 , upY(75));
         addActor(podajStopien);

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
@@ -38,6 +39,7 @@ public class Graph extends State {
     private ArrayList<Double> root=new ArrayList<Double>();
     private ArrayList<Double> values=new ArrayList<Double>();
     private Image wstecz;
+    private  Image Copyright;
 
     private Label sxp = new Label("1" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
     private Label sxm = new Label("-1" , new Label.LabelStyle(sofiaProSoftMedium46px , Color.BLACK));
@@ -73,8 +75,13 @@ public class Graph extends State {
         bg = new Image(skin.getDrawable("bg"));
         addActor(bg);
 
-        x.setPosition(Gdx.graphics.getWidth()-50,Gdx.graphics.getHeight()/2-50);
-        y.setPosition(Gdx.graphics.getWidth()/2-50,Gdx.graphics.getHeight()-50);
+        Copyright=new Image(Polynomial.skin.getDrawable("Copyright"));
+        Copyright.setScale(0.58f);
+        Copyright.setPosition(0,upY((int) (Copyright.getHeight()*0.85)));
+        addActor(Copyright);
+
+        x.setPosition(Polynomial.WIDTH-50, Polynomial.HEIGHT/2-50);
+        y.setPosition(Polynomial.WIDTH/2+50,Polynomial.HEIGHT-50);
         addActor(x);
         addActor(y);
 

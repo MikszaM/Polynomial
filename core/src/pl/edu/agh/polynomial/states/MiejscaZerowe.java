@@ -26,6 +26,7 @@ public class MiejscaZerowe extends State {
     private BitmapFont sofiaProSoftMedium34px = new BitmapFont(Gdx.files.internal("SofiaProSoftMedium34px.fnt"));
     private BitmapFont sofiaProSoftMedium46px = new BitmapFont(Gdx.files.internal("SofiaProSoftMedium46px.fnt"));
     private Image wstecz;
+    private Image Copyright;
 
     public static Complex[] getRoots() {
         return roots;
@@ -158,6 +159,13 @@ public class MiejscaZerowe extends State {
         super(gsm);
         bg = new Image(skin.getDrawable("bg"));
         addActor(bg);
+
+        Copyright=new Image(Polynomial.skin.getDrawable("Copyright"));
+        Copyright.setScale(0.58f);
+        Copyright.setPosition(0,upY((int) (Copyright.getHeight()*0.85)));
+        addActor(Copyright);
+
+
         licz();
         Gdx.input.setInputProcessor(this);
         startEnterAnimation();
