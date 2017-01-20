@@ -155,7 +155,7 @@ public class MiejscaZerowe extends State {
         droots = findRoots(countDerive(poly));
     }
 
-    public MiejscaZerowe(GameStateManager gsm) {
+    public MiejscaZerowe(GameStateManager gsm, final int domain) {
         super(gsm);
         bg = new Image(skin.getDrawable("bg"));
         addActor(bg);
@@ -173,15 +173,35 @@ public class MiejscaZerowe extends State {
         title.setPosition(Polynomial.WIDTH/2 -title.getWidth()/2, upY(60));
         addActor(title);
         showRoots = new Label[roots.length];
+        int z=0;
+        if(domain==1) z=1;
         for(int i=0 ; i<showRoots.length ; i++){
-            if(Math.round(MiejscaZerowe.getRoots()[i].getImaginary()*100.0)/100.0!=0) {
-                showRoots[i] = new Label("" + Math.round(MiejscaZerowe.getRoots()[i].getReal() * 100.0) / 100.0 + " +  " + Math.round(MiejscaZerowe.getRoots()[i].getImaginary() * 100.0) / 100.0 + "i", new Label.LabelStyle(sofiaProSoftMedium34px, Color.BLACK));
-            }
-            else showRoots[i] = new Label("" + Math.round(MiejscaZerowe.getRoots()[i].getReal() * 100.0) / 100.0, new Label.LabelStyle(sofiaProSoftMedium34px, Color.BLACK));
+            if(domain==1){
+                if(Math.round(MiejscaZerowe.getRoots()[i].getImaginary()*100.0)/100.0!=0) {
+                    showRoots[i] = new Label("" + Math.round(MiejscaZerowe.getRoots()[i].getReal() * 100.0) / 100.0 + " +  " + Math.round(MiejscaZerowe.getRoots()[i].getImaginary() * 100.0) / 100.0 + "i", new Label.LabelStyle(sofiaProSoftMedium34px, Color.BLACK));
+                }
+                else showRoots[i] = new Label("" + Math.round(MiejscaZerowe.getRoots()[i].getReal() * 100.0) / 100.0, new Label.LabelStyle(sofiaProSoftMedium34px, Color.BLACK));
 
-            showRoots[i].setPosition(30+350*(i/8) , upY(120+(i%8)*39));
-            addActor(showRoots[i]);
+                showRoots[i].setPosition(30+350*(i/8) , upY(120+(i%8)*39));
+                addActor(showRoots[i]);
+            }
+            else{
+                if(Math.round(MiejscaZerowe.getRoots()[i].getImaginary()*100.0)/100.0==0) {
+                    showRoots[i] = new Label("" + Math.round(MiejscaZerowe.getRoots()[i].getReal() * 100.0) / 100.0, new Label.LabelStyle(sofiaProSoftMedium34px, Color.BLACK));
+                    showRoots[i].setPosition(30+350*(z/8) , upY(120+(z%8)*39));
+                    addActor(showRoots[i]);
+                    z++;
+                }
+
+            }
+
         }
+        if(z==0) {
+            showRoots[0] = new Label("Brak rzeczywistych miejsc zerowych", new Label.LabelStyle(sofiaProSoftMedium34px, Color.BLACK));
+            showRoots[0].setPosition(30 , upY(120));
+            addActor(showRoots[0]);
+        }
+
         wstecz=new Image(Polynomial.skin.getDrawable("wstecz"));
         wstecz.setPosition(0,0);
         addActor(wstecz);
@@ -199,6 +219,7 @@ public class MiejscaZerowe extends State {
     public void handleInput(float x, float y) {
         if((x-wstecz.getX()-wstecz.getWidth()/2)*(x-wstecz.getX()-wstecz.getWidth()/2) + (y-upY((int)wstecz.getY())+wstecz.getHeight()/2)*(y-upY((int)wstecz.getY())+wstecz.getHeight()/2) < wstecz.getWidth()/2*wstecz.getWidth()/2) {
 
+            startEndAnimationAndPopState();
             startEndAnimationAndPopState();
         }
     }

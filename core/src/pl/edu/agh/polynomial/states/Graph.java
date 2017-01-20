@@ -212,6 +212,7 @@ public class Graph extends State {
 
 
         Gdx.input.setInputProcessor(this);
+        startEnterAnimation();
     }
 
 
