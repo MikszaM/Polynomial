@@ -64,7 +64,7 @@ public class MainScreen extends State {
 
         Copyright=new Image(Polynomial.skin.getDrawable("Copyright"));
         Copyright.setScale(0.58f);
-        Copyright.setPosition(0,upY((int) (Copyright.getHeight()*0.85)));
+        Copyright.setPosition((int) (Polynomial.WIDTH-Copyright.getWidth()*0.58),upY((int) (Copyright.getHeight()*0.85)));
         addActor(Copyright);
 
         wspolczynniki = new Array<TextField>();
